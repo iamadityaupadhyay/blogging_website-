@@ -25,9 +25,12 @@ SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+import os
 
+# Use the PORT env var in development
+PORT = os.environ.get('PORT', '8000')
 ALLOWED_HOSTS =['*']
-port = os.getenv('PORT', 8000)  # Defaults to 8000 if PORT is not set
+  # Defaults to 8000 if PORT is not set
 
 # Application definition
 

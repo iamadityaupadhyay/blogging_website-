@@ -1,13 +1,13 @@
 services:
-     - type: web
-       name: mysite
-       env: python
-       buildCommand: "./build.sh"
-       startCommand: "gunicorn mysite.wsgi:application"
-       envVars:
-         - key: DEBUG
-           value: False
-         - key: SECRET_KEY
-           generateValue: true
-         - key: DJANGO_ALLOWED_HOSTS
-           value: .onrender.com
+  - type: web
+    name: mysite
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn mysite.wsgi:application --bind 0.0.0.0:$PORT"
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        value: .onrender.com
