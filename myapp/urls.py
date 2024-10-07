@@ -9,7 +9,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-   path('home/',home_view),
+   
+   
+   
+   path('',home_view),
    path('create-blog/', create_blog, name='create_blog'),
    path('update-blog/<int:pk>',update_blog),
    path('delete-blog/<int:pk>',delete_blog),
