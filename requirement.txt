@@ -1,4 +1,4 @@
-// Django==3.2.9
+
 Django==4.1.13
 django-jazzmin==3.0.0
 django-markdownx==3.0.1
