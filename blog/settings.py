@@ -29,6 +29,9 @@ DEBUG = True
 ALLOWED_HOSTS =['iamaditya-blog.onrender.com', 'localhost', '127.0.0.1']
 
 
+import os
+
+port = os.getenv('PORT', 8000)  # Defaults to 8000 if PORT is not set
 
 # Application definition
 
