@@ -111,7 +111,6 @@ def home_view(request):
     return render(request, 'home.html',context)
 @login_required(login_url="/blog/login")
 def logout_page(request):
-    if request.user.is_authenticated:
         logout(request)
         return redirect("/blog/home/")
     
