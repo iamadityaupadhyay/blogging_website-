@@ -3,7 +3,7 @@ services:
     name: blog
     env: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn blog-.wsgi:application --bind 0.0.0.0:$PORT"
+    startCommand: "gunicorn blog.wsgi:application --bind 0.0.0.0:$PORT"
     envVars:
       - key: DEBUG
         value: False
