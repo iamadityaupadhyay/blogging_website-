@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = 'myapp.UserImage'  # Replace 'myapp' with the name of your Django app
@@ -24,12 +24,9 @@ AUTH_USER_MODEL = 'myapp.UserImage'  # Replace 'myapp' with the name of your Dja
 SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS =['iamaditya-blog.onrender.com','onrender.com', 'localhost', '0.0.0.0']
-
-
-import os
+ALLOWED_HOSTS =['*']
 port = os.getenv('PORT', 8000)  # Defaults to 8000 if PORT is not set
 
 # Application definition
