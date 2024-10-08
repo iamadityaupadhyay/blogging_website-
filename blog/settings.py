@@ -24,7 +24,7 @@ AUTH_USER_MODEL = 'myapp.UserImage'  # Replace 'myapp' with the name of your Dja
 SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 import os
 
