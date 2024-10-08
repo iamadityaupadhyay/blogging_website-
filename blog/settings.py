@@ -24,7 +24,7 @@ AUTH_USER_MODEL = 'myapp.UserImage'  # Replace 'myapp' with the name of your Dja
 SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = True
 
 import os
 
@@ -138,9 +138,9 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # where collectstatic will copy files
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # where your static files are located during development
+    os.path.join(BASE_DIR, 'public/static'),  # where your static files are located during development
 ]
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,"media/")
+MEDIA_ROOT = os.path.join(BASE_DIR,"public/static")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
