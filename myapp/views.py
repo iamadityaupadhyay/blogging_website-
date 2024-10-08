@@ -63,7 +63,7 @@ def create_blog(request):
         return redirect('/blog/home/')
     return render(request, 'create_blog_post.html')
 
-
+@login_required(login_url="/blog/login")
 def view_blog(request,user):
     blog= BlogPost.objects.filter(user=user)
     print(blog)
