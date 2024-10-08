@@ -60,7 +60,7 @@ def create_blog(request):
             user=request.user,
             image=image
         )
-        # return redirect('/blog/home/')
+        return redirect('/blog/home/')
     return render(request, 'create_blog_post.html')
 
 
