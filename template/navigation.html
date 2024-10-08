@@ -41,6 +41,7 @@
         .profile-container {
             position: relative;
             display: inline-block;
+            margin-left: 10px; /* Add margin between search button and profile image */
         }
         .profile_image {
             cursor: pointer;
@@ -74,6 +75,13 @@
             border: none;
             border-radius: 3px;
             cursor: pointer;
+        }
+        @media (max-width: 576px) {
+            .profile-card {
+                right: auto;
+                left: 50%;
+                transform: translateX(-50%);
+            }
         }
     </style>
 </head>
