@@ -80,6 +80,14 @@ def view_by_id(request,pk):
     print(context)
     return render(request,"view_more.html",context)
 
+def view_blog_category(request,pk):
+    category= Category.objects.get(id=pk)
+    print(category)
+    blog= BlogPost.objects.filter(category=category)
+    context={
+        "blogs":blog
+    }
+    return render(request, "view_blog.html",context)
 
 # Register and login 
 def register(request):
