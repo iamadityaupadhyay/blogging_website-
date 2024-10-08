@@ -28,8 +28,8 @@
                 <div class="card h-100">
                     <img src="/media/{{blog.image}}" class="card-img-top" alt="Loading">
                     <div class="card-body">
-                        <h5 class="card-title">{{blog.title}}</h5>
-                        <p class="card-text">Created By {{blog.user}}</p>
+                        {{blog.content|safe}}
+                        <p class="card-text">Created By {{blog.user.username}}</p>
                         <a href="/blog/view-by-id/{{blog.id}}" class="btn btn-primary">View More</a>
                         <a href="/blog/update-blog/{{blog.id}}" class="btn btn-primary">Update</a>
                     </div>

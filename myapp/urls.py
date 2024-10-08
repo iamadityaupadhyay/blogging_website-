@@ -24,7 +24,8 @@ urlpatterns = [
    path('logout/',logout_page),
    path('profile-update/<int:pk>/',profile_update),
    path('category/',get_category),
-   path('get_user',get_user)
+   path('get_user',get_user),
+   path('upload/', upload_image, name='upload_image'),
 ]
 
 

@@ -10,6 +10,22 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from myapp.serializer import *
 from django.contrib.auth.decorators import login_required
+import html
+import bleach
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.core.files.storage import default_storage
+
+@csrf_exempt
+def upload_image(request):
+    if request.method == 'POST' and request.FILES.get('upload'):
+        image = request.FILES['upload']
+        image_path = default_storage.save(f'uploads/{image.name}', image)
+        image_url = f'/media/{image_path}'
+        return JsonResponse({'uploaded': True, 'url': image_url})
+    
+    return JsonResponse({'uploaded': False})
 
 @api_view()
 def get_user(request):
@@ -23,9 +39,10 @@ def create_blog(request):
     if request.method == 'POST':
         data=request.POST
         category=data.get('category')
+        content = data.get('content')
         print(f'Category id is {category}')
         title=data.get('title')
-        content = data.get('content')
+        print(f'{html.escape(content)}')
         try:
           image=request.FILES['image']
         except:
@@ -43,8 +60,7 @@ def create_blog(request):
             user=request.user,
             image=image
         )
-        blog_post.save()
-        return redirect('/blog/home/')
+        # return redirect('/blog/home/')
     return render(request, 'create_blog_post.html')
 
 
@@ -162,6 +178,7 @@ def update_blog(request,pk):
         data=request.POST
         title=data.get('title')
         content=data.get('content')
+        print(content)
         category=data.get('category')
         try:
             category_object=Category.objects.get(id=category)
