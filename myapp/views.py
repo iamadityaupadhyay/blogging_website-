@@ -109,7 +109,6 @@ def home_view(request):
     }
    
     return render(request, 'home.html',context)
-@login_required(login_url="/blog/login")
 def logout_page(request):
         logout(request)
         return redirect("/blog/home/")
@@ -128,7 +127,6 @@ def get_category(request):
     )
     
 
-@login_required(login_url="/blog/login")
 def profile_update(request,pk):
     
     try:
@@ -158,7 +156,8 @@ def profile_update(request,pk):
 @login_required(login_url="/blog/login")
 def update_blog(request,pk):
     blog = BlogPost.objects.get(id=pk)
-    # print(blog.title)
+    if request.user!=blog.user:
+        return redirect("/blog/home/")
     if request.method =="POST":
         data=request.POST
         title=data.get('title')
@@ -177,7 +176,6 @@ def update_blog(request,pk):
         if category:
             blog.category=category_object
         
-        # image
         try:
             image=request.FILES['image']
         except:image=None
