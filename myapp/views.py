@@ -11,7 +11,7 @@ from rest_framework.response import Response
 from myapp.serializer import *
 from django.contrib.auth.decorators import login_required
 import html
-import bleach
+
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
