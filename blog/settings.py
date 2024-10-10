@@ -159,7 +159,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,"public/static")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-from dotenv import load_dotenv
+
 
 load_dotenv()
 import cloudinary
