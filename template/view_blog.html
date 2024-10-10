@@ -45,7 +45,7 @@
                 {% for blog in blogs %}
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
                     <div class="card h-100">
-                        <img src="/media/{{blog.image}}" class="card-img-top" alt="Loading">
+                        <img src="{{blog.image.url}}" class="card-img-top" alt="Loading">
                         <div class="card-body">
                             {{blog.content|safe}}
                             <p class="card-text">Created By {{blog.user.username}}</p>
