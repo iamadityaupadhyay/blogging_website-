@@ -162,15 +162,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 from dotenv import load_dotenv
 
 load_dotenv()
-from dotenv import load_dotenv
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    'CLOUD_NAME': "djahxpuyx",
+    'API_KEY':888441744137892,
+    'API_SECRET':" 9L9gKxQjrQIHsfY5OFsaOAfKwyE",
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
