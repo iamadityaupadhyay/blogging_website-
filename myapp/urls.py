@@ -26,7 +26,9 @@ urlpatterns = [
    path('category/',get_category),
    path('get_user',get_user),
    path('upload/', upload_image, name='upload_image'),
-   path('blog_by_category/<int:pk>',view_blog_category)
+   path('blog_by_category/<int:pk>',view_blog_category),
+   path('comment/<int:pk>',comment),
+   path('like/<int:pk>',like),
    
 ]
 

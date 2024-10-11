@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import *
-from django.contrib.auth import authenticate, login,logout
+from django.shortcuts import *
+from django.contrib.auth import *
 from django.http import JsonResponse
 from django.contrib import messages
 # Create your views here.
@@ -11,45 +12,26 @@ from rest_framework.response import Response
 from myapp.serializer import *
 from django.contrib.auth.decorators import login_required
 import html
-
-
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 
-@csrf_exempt
-def upload_image(request):
-    if request.method == 'POST' and request.FILES.get('upload'):
-        image = request.FILES['upload']
-        image_path = default_storage.save(f'uploads/{image.name}', image)
-        image_url = f'/media/{image_path}'
-        return JsonResponse({'uploaded': True, 'url': image_url})
-    
-    return JsonResponse({'uploaded': False})
-
-@api_view()
-def get_user(request):
-    user=UserImage.objects.all()
-    serializer = UserSerializer(user,many=True)
-    return Response(
-        serializer.data
-    )
 @login_required(login_url="/blog/login")
 def create_blog(request):
     if request.method == 'POST':
         data=request.POST
         category=data.get('category')
         content = data.get('content')
-        print(f'Category id is {category}')
+        
+        
         title=data.get('title')
-        print(f'{html.escape(content)}')
+
         try:
           image=request.FILES['image']
         except:
           image=None
         try:
             category_object= Category.objects.get(id=category)
-            print(category_object)
+ 
         except Category.DoesNotExist:
             return render(request,'create_blog_post.html',{"error":"Select a category"})
         
@@ -66,7 +48,6 @@ def create_blog(request):
 @login_required(login_url="/blog/login")
 def view_blog(request,user):
     blog= BlogPost.objects.filter(user=user)
-    print(blog)
     context={
        "blogs":blog
     }
@@ -74,15 +55,19 @@ def view_blog(request,user):
 
 def view_by_id(request,pk):
     queryset = BlogPost.objects.get(id=pk)
+    comments = queryset.blog_comment.all()
+    blog=BlogPost.objects.filter(user=queryset.user)
+    
     context ={
-        "blog":queryset
+        "blog":queryset,
+        "comments":comments,
+        "morefrom":blog
     }
-    print(context)
+
     return render(request,"view_more.html",context)
 
 def view_blog_category(request,pk):
     category= Category.objects.get(id=pk)
-    print(category)
     blog= BlogPost.objects.filter(category=category)
     context={
         "blogs":blog
@@ -156,7 +141,7 @@ def profile_update(request,pk):
     
     try:
          image= request.FILES['image']
-         print(image)
+
     except:
             image=None 
     user = UserImage.objects.get(id=pk)
@@ -187,11 +172,11 @@ def update_blog(request,pk):
         data=request.POST
         title=data.get('title')
         content=data.get('content')
-        print(content)
+
         category=data.get('category')
         try:
             category_object=Category.objects.get(id=category)
-            print(category_object)
+
         except Category.DoesNotExist:
             return render(request,'create_blog_post.html',{"error":"Select a category"})
         
@@ -214,7 +199,7 @@ def update_blog(request,pk):
         "blog":blog,
     }
     
-    print(context)
+
     return render(request,"update_blog.html",context)
 # delete blog 
 @login_required(login_url="/blog/login")
@@ -222,3 +207,68 @@ def delete_blog(request,pk):
     blog = BlogPost.objects.filter(id =pk)
     blog.delete()
     return redirect("/blog/home/")
+
+
+
+@csrf_exempt
+def upload_image(request):
+    if request.method == 'POST' and request.FILES.get('upload'):
+        image = request.FILES['upload']
+        image_path = default_storage.save(f'uploads/{image.name}', image)
+        image_url = f'/media/{image_path}'
+        return JsonResponse({'uploaded': True, 'url': image_url})
+    
+    return JsonResponse({'uploaded': False})
+
+@api_view()
+def get_user(request):
+    user=UserImage.objects.all()
+    serializer = UserSerializer(user,many=True)
+    return Response(
+        serializer.data
+    )
+
+
+
+def like(request,pk):
+    blog=get_object_or_404(BlogPost,id=pk)
+    like= blog.blog_like.all()
+
+    if request.method=="POST":
+        liked = Like.objects.filter(user=request.user,blog =blog).exists()
+        if liked:
+            Like.objects.filter(user=request.user,blog =blog).delete()
+            return JsonResponse(
+                {"liked":False}
+            )
+        
+        else:
+            
+            Like.objects.create(
+            likecount=len(like),
+            user=request.user,
+            blog=blog,
+            
+        )
+         
+        return JsonResponse({'liked': True, "like":len(like)})
+def comment(request,pk):
+    blog = get_object_or_404(BlogPost,id=pk)
+    if request.method =="POST":
+        comment = request.POST.get('comment')
+        Comment.objects.create(
+            
+            user=request.user,
+            blog=blog,
+            comment=comment
+        )
+        return JsonResponse(
+            {"message":"New comment added"}
+        )
+# @api_view()
+# def total_likes(request,pk):
+#     blog = get_object_or_404(BlogPost,id =pk)
+#     like =blog.blog_like.all()
+#     print(len(like))
+    
+    

@@ -12,4 +12,5 @@ class UserImageAdmin(UserAdmin):
 
 admin.site.register(UserImage, UserImageAdmin)
 admin.site.register(BlogPost)
-
+admin.site.register(Comment)
+admin.site.register(Like)
