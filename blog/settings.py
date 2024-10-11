@@ -99,24 +99,16 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+import dj_database_url
 
-# Use database-backed sessions (default behavior)
+DATABASES = {
+    'default': dj_database_url.config(
+        default='postgresql://root:6PCfNuw8TfFyFOMlYyyiylHCmKk4CfJ3@dpg-cs4cn2t2ng1s739i0s80-a.singapore-postgres.render.com/blogging_jumc',
+        conn_max_age=600, 
+    )
+}
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-# CLIENT_SESSION_ENGINE = "django_client_sessions"
-# CLIENT_SESSION_MONGODB_HOST = "mongodb+srv://uaditya219:aditya@cluster0.agu4r.mongodb.net"
-# CLIENT_SESSION_MONGODB_PORT = 27017  # Default MongoDB port
-# CLIENT_SESSION_MONGODB_DB = "blog"  # Use the same database you're using for the application
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
