@@ -71,7 +71,7 @@ def view_blog(request,user):
        "blogs":blog
     }
     return render(request,"view_blog.html",context)
-@login_required(login_url="/blog/login")
+
 def view_by_id(request,pk):
     queryset = BlogPost.objects.get(id=pk)
     context ={
