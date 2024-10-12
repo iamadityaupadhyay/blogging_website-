@@ -30,7 +30,7 @@ class Comment(models.Model):
     def __str__(self):
         return self.blog.title
 class Like(models.Model):
-    like=models.CharField()
+    like=models.BooleanField(default=False)
     likecount=models.IntegerField(null=True,blank=True)
     user = models.ForeignKey(UserImage,on_delete=models.CASCADE ,related_name="user_like",null =True, blank=True)
     blog=models.ForeignKey(BlogPost,on_delete=models.CASCADE ,related_name="blog_like",null =True, blank=True)

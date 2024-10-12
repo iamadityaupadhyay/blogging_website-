@@ -57,15 +57,23 @@ def view_by_id(request,pk):
     queryset = BlogPost.objects.get(id=pk)
     comments = queryset.blog_comment.all()
     blog=BlogPost.objects.filter(user=queryset.user)
-    
+    like = Like.objects.filter(blog=blog,user=request.user)
+    likecount=like.blog_like.all()
     context ={
         "blog":queryset,
         "comments":comments,
-        "morefrom":blog
+        "morefrom":blog,
+        "like":like,
+        "likeCount":len(likecount)
     }
 
     return render(request,"view_more.html",context)
-
+def navigation(request):
+    blogCategory = Category.objects.all()
+    context ={
+        "categorys":blogCategory
+    }
+    return render(request,"navigation.html",context)
 def view_blog_category(request,pk):
     category= Category.objects.get(id=pk)
     blog= BlogPost.objects.filter(category=category)
@@ -228,30 +236,45 @@ def get_user(request):
         serializer.data
     )
 
-
-
+def view_by_id(request,pk):
+    queryset = BlogPost.objects.get(id=pk)
+    comments = queryset.blog_comment.all()
+    blog=BlogPost.objects.filter(user=queryset.user)
+    like = Like.objects.filter(blog=queryset,user=request.user)
+    like = like.first() 
+    likecount=queryset.blog_like.all().count()
+    print(likecount)
+    context ={
+        "blog":queryset,
+        "comments":comments,
+        "morefrom":blog,
+        "like":like,
+        "likeCount":likecount
+    }
+    print(like)
+    return render(request,"view_more.html",context)
 def like(request,pk):
     blog=get_object_or_404(BlogPost,id=pk)
-    like= blog.blog_like.all()
-
     if request.method=="POST":
-        liked = Like.objects.filter(user=request.user,blog =blog).exists()
-        if liked:
-            Like.objects.filter(user=request.user,blog =blog).delete()
+        data = request.POST
+        like = data.get('like')
+        total_blog_like= blog.blog_like.all().count()
+        object,create = Like.objects.get_or_create(user=request.user,blog=blog)
+        if like=="true":
+            object.like=1
+            object.save()
             return JsonResponse(
-                {"liked":False}
+                {"liked":True,"likeCount":total_blog_like}
             )
-        
         else:
-            
-            Like.objects.create(
-            likecount=len(like),
-            user=request.user,
-            blog=blog,
-            
-        )
-         
-        return JsonResponse({'liked': True, "like":len(like)})
+            object.like=0
+            total_blog_like-=1
+            object.save()
+            return JsonResponse(
+                {"liked":False,"likeCount":total_blog_like}
+            )
+    
+        
 def comment(request,pk):
     blog = get_object_or_404(BlogPost,id=pk)
     if request.method =="POST":
@@ -265,10 +288,3 @@ def comment(request,pk):
         return JsonResponse(
             {"message":"New comment added"}
         )
-# @api_view()
-# def total_likes(request,pk):
-#     blog = get_object_or_404(BlogPost,id =pk)
-#     like =blog.blog_like.all()
-#     print(len(like))
-    
-    

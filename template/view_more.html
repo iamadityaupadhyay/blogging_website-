@@ -168,7 +168,7 @@
             <div class="post-meta">
                 <span>By {{ blog.user.first_name }}</span>
                 {%if blog.user.image.url%}
-                <span><img style="border-radius: 50%;"   width="40px" height = "40px" alt="User" src={{blog.user.image.url}}></span>
+                <span><img style="border-radius: 50%;"  loading="lazy" width="40px" height = "40px" alt="User" src={{blog.user.image.url}}></span>
                 {%endif%}
             </div>
             <div class="post-content">
@@ -176,21 +176,22 @@
             </div>
             {% if blog.image %}
             <div class="post-image mt-4">
-                <img src="{{ blog.image.url }}" alt="{{ blog.title }} Image" class="img-fluid">
+                <img src="{{ blog.image.url }}" loading="lazy" alt="{{ blog.title }} Image" class="img-fluid">
             </div>
             {% endif %}
-            {%if data.liked%}
-            <button class="like-btn" data-post-id="{{ blog.id }}">
-                <i class="fas fa-thumbs-down"></i> Unlike
+            {% if request.user.is_authenticated %}
+            <button class="like-btn" data-post-id="{{ blog.id }}" data-like="{{like.like|yesno:'false,true' }}">
+                {% if like.like %}
+                    <i class="fas fa-thumbs-down"></i> Unlike {{likeCount}}
+                {% else %}
+                    <i class="fas fa-thumbs-up"></i> Like {{likeCount}}
+                {% endif %}
             </button>
-            {%else%}
-            <button class="like-btn" data-post-id="{{ blog.id }}">
-                <i class="fas fa-thumbs-up"></i> Like {{like}}
-            </button>
-            {%endif%}
+            
+            
         </div>
 
-        {% if request.user.is_authenticated %}
+        
        
 
         <div class="comment-section">
@@ -218,7 +219,7 @@
             {% for more_blog in morefrom %}
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ more_blog.title }}</h5>
+                    <h5 class="card-title">{{ more_blog.title }} </h5>
                     <p id ="morefromtext" class="card-text">{{ more_blog.content|safe|truncatewords_html:20 }}</p>
                     <a href="/blog/view-by-id/{{ more_blog.id }}" class="btn btn-dark" style="float:right;">View</a>
                 </div>
@@ -230,26 +231,33 @@
 
         <script>
             // AJAX for Like
-            $('.like-btn').click(function() {
-                var postId = $(this).data('post-id');
-                query=document.querySelector(".like-btn");
-                $.ajax({
-                    url: '/blog/like/' + postId ,
-                    method: 'POST',
-                    headers: {'X-CSRFToken': '{{ csrf_token }}'},
-                    success: function(data) {
-                        if (data.liked) {
-                            alert('Post liked!');
-                            query.innerHTML="Unlike"
-                          
-                        } else {
-                            alert('Post unliked!');
-                            query.innerHTML="Like{{data.like}}"
-                        
-                        }
-                    }
-                });
+            document.addEventListener('DOMContentLoaded', function() {
+             $('.like-btn').click(function() {
+            var postId = $(this).data('post-id');
+            var like = $(this).data('like');
+            console.log(like);
+            var button = $(this);
+
+            $.ajax({
+                url: '/blog/like/' + postId,
+                method: 'POST',
+                data: { like: like },
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+                success: function(data) {
+                console.log(data.liked);
+                if (data.liked) {
+                    // location.reload();
+                    button.html('<i class="fas fa-thumbs-down"></i> '+ data.likeCount);
+                    button.data('like', 'true'); 
+                } else {
+                    // location.reload()
+                    button.html('<i class="fas fa-thumbs-up"></i> Like ' + data.likeCount);
+                    button.data('like', 'false');
+                }
+                }
             });
+        });
+    });
 
             // AJAX for Comment
             $('.comment-btn').click(function() {
