@@ -102,7 +102,7 @@ def login_page(request):
         login(request,user)
         request.session['just_logged_in']=True
         return redirect("/blog/home/")
-    return render(request,"login.html")
+    return render(request,"accounts/login.html")
 def home_view(request):
     blog= BlogPost.objects.all()
     
