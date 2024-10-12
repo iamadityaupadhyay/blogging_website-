@@ -235,7 +235,7 @@ def view_by_id(request,pk):
     }
     if request.user.is_authenticated:
         try:
-              like = Like.objects.get(blog=queryset)
+              like = Like.objects.filter(blog=queryset)
               context["like"]=like
         except Like.DoesNotExist:
             print("Not found")
