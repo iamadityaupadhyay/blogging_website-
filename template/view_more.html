@@ -52,7 +52,7 @@
             border-radius: 5px;
         }
 
-        .like-btn, .comment-btn {
+        .comment-btn {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -65,12 +65,26 @@
             color: #fff;
             background-color: #000001;
         }
+        .like-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            color:#000001;
+            margin-top: 10px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            background-color: #e8e8ed;
+        }
         button{
             background-color: #000001;
         }
 
         .like-btn:hover, .comment-btn:hover {
             background-color: #0d0e0f;
+            color:#ddd;
         }
 
         .comment-section {
@@ -182,10 +196,10 @@
             {% if request.user.is_authenticated %}
             <button class="like-btn" data-post-id="{{ blog.id }}" data-like="{{like.like|yesno:'false,true' }}">
                 {% if like.like %}
-                    <i class="fas fa-thumbs-down"></i> Unlike {{likeCount}}
+                    <i class="fas fa-thumbs-down"></i>{{likeCount}}
                 {% else %}
-                    <i class="fas fa-thumbs-up"></i> Like {{likeCount}}
-                {% endif %}
+                    <i class="fas fa-thumbs-up"></i> {{likeCount}}
+                {%endif%}
             </button>
             
             
@@ -232,10 +246,9 @@
         <script>
             // AJAX for Like
             document.addEventListener('DOMContentLoaded', function() {
-             $('.like-btn').click(function() {
+        $('.like-btn').click(function() {
             var postId = $(this).data('post-id');
-            var like = $(this).data('like');
-            console.log(like);
+            var like = $(this).data('like') === "true"; // Convert to boolean
             var button = $(this);
 
             $.ajax({
@@ -244,16 +257,24 @@
                 data: { like: like },
                 headers: { 'X-CSRFToken': '{{ csrf_token }}' },
                 success: function(data) {
-                console.log(data.liked);
-                if (data.liked) {
-                    // location.reload();
-                    button.html('<i class="fas fa-thumbs-down"></i> '+ data.likeCount);
-                    button.data('like', 'true'); 
-                } else {
-                    // location.reload()
-                    button.html('<i class="fas fa-thumbs-up"></i> Like ' + data.likeCount);
-                    button.data('like', 'false');
-                }
+                    console.log(data)
+                    if (data.liked) {
+                        alert("Blog Liked")
+                        button.html('<i class="fas fa-thumbs-up"></i> ' + data.likeCount);
+                        button.css({
+                            'background-color': 'black',
+                            'color': 'white'
+                        });
+                        button.data('like','false')
+                    } else {
+                        alert("Blog UnLiked")
+                        button.html('<i class="fas fa-thumbs-up"></i>' + data.likeCount);
+                        button.css({
+                            'background-color': 'white',
+                            'color': 'black'
+                        });
+                        button.data('like','true')
+                    }
                 }
             });
         });

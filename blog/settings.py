@@ -12,7 +12,7 @@ AUTH_USER_MODEL = 'myapp.UserImage'
 SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 import os
 
 # Use the PORT env var in development
@@ -48,12 +48,34 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'cloudinary_storage',
+    'django.contrib.sites',
+       'allauth',
+       'allauth.account',
+       'allauth.socialaccount',
+       'allauth.socialaccount.providers.github',
+       'allauth.socialaccount.providers.google',
 
 ]
 import os
 
 
+AUTHENTICATION_BACKENDS = [
+       'django.contrib.auth.backends.ModelBackend',
+       'allauth.account.auth_backends.AuthenticationBackend',
+   ]
 
+SOCIALACCOUNT_PROVIDERS = {
+       'github': {
+           'SCOPE': [
+               'user',
+               'repo',
+               'read:org',
+           ],
+       }
+   }
+
+LOGIN_REDIRECT_URL = '/blog/login'  
+   
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

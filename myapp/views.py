@@ -53,21 +53,6 @@ def view_blog(request,user):
     }
     return render(request,"view_blog.html",context)
 
-def view_by_id(request,pk):
-    queryset = BlogPost.objects.get(id=pk)
-    comments = queryset.blog_comment.all()
-    blog=BlogPost.objects.filter(user=queryset.user)
-    like = Like.objects.filter(blog=blog,user=request.user)
-    likecount=like.blog_like.all()
-    context ={
-        "blog":queryset,
-        "comments":comments,
-        "morefrom":blog,
-        "like":like,
-        "likeCount":len(likecount)
-    }
-
-    return render(request,"view_more.html",context)
 def navigation(request):
     blogCategory = Category.objects.all()
     context ={
@@ -120,6 +105,7 @@ def login_page(request):
     return render(request,"login.html")
 def home_view(request):
     blog= BlogPost.objects.all()
+    
     just_logged_in = request.session.pop('just_logged_in', False)
     context={
        "blogs":blog,
@@ -239,24 +225,27 @@ def get_user(request):
 def view_by_id(request,pk):
     queryset = BlogPost.objects.get(id=pk)
     comments = queryset.blog_comment.all()
-    blog=BlogPost.objects.filter(user=queryset.user)
-    like = Like.objects.filter(blog=queryset,user=request.user)
-    like = like.first() 
+    morefromuserblog=BlogPost.objects.filter(user=queryset.user)
     likecount=queryset.blog_like.all().count()
-    print(likecount)
     context ={
         "blog":queryset,
         "comments":comments,
-        "morefrom":blog,
-        "like":like,
+        "morefrom":morefromuserblog,
         "likeCount":likecount
     }
-    print(like)
+    if request.user.is_authenticated:
+        try:
+              like = Like.objects.get(blog=queryset)
+              context["like"]=like
+        except Like.DoesNotExist:
+            print("Not found")
+            
     return render(request,"view_more.html",context)
 def like(request,pk):
     blog=get_object_or_404(BlogPost,id=pk)
     if request.method=="POST":
         data = request.POST
+        print(data)
         like = data.get('like')
         total_blog_like= blog.blog_like.all().count()
         object,create = Like.objects.get_or_create(user=request.user,blog=blog)
