@@ -1,14 +1,9 @@
 
-
 from pathlib import Path
 import os
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 AUTH_USER_MODEL = 'myapp.UserImage'
 
-
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -48,34 +43,44 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'cloudinary_storage',
-    'django.contrib.sites',
-       'allauth',
-       'allauth.account',
-       'allauth.socialaccount',
-       'allauth.socialaccount.providers.github',
-       'allauth.socialaccount.providers.google',
-
+    'django.contrib.sites',  # Make sure 'django.contrib.sites' is added
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
 ]
 import os
 
+SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
        'django.contrib.auth.backends.ModelBackend',
        'allauth.account.auth_backends.AuthenticationBackend',
-   ]
+]
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+# SECURE_SSL_REDIRECT = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
 SOCIALACCOUNT_PROVIDERS = {
-       'github': {
-           'SCOPE': [
-               'user',
-               'repo',
-               'read:org',
-           ],
-       }
-   }
-
-LOGIN_REDIRECT_URL = '/blog/login'  
-   
+    # 'google': {
+    #     'APP': {
+    #         'client_id': os.getenv('GOOGLE_CLIENT_ID'),
+    #         'secret': os.getenv('GOOGLE_CLIENT_SECRET'),
+    #         'key': ''
+    #     }
+    # },
+    'github': {
+        'APP': {
+            'client_id': "Ov23liDNlII97CLP87o9",
+            'secret':"705d2ca353c9b1fdca852247203608a4fc50cdb0",
+            'key': ''
+        }
+    }
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -84,6 +89,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -99,6 +105,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
+
             ],
         },
     },
