@@ -14,3 +14,4 @@ django-ckeditor==6.7.1
 psycopg2-binary==2.9.9
 django-allauth==65.0.2
 PyJWT==2.8.0
+cryptography==42.0.8

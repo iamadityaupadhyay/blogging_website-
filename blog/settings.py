@@ -7,7 +7,7 @@ AUTH_USER_MODEL = 'myapp.UserImage'
 SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG =False
 import os
 
 # Use the PORT env var in development
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'cloudinary_storage',
+    "sslserver",
     'django.contrib.sites',  # Make sure 'django.contrib.sites' is added
     'allauth',
     'allauth.account',
@@ -58,21 +59,21 @@ AUTHENTICATION_BACKENDS = [
        'django.contrib.auth.backends.ModelBackend',
        'allauth.account.auth_backends.AuthenticationBackend',
 ]
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'  # Redirect to the blog homepage after login
 LOGOUT_REDIRECT_URL = '/'
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-# SECURE_SSL_REDIRECT = True
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 SOCIALACCOUNT_PROVIDERS = {
-    # 'google': {
-    #     'APP': {
-    #         'client_id': os.getenv('GOOGLE_CLIENT_ID'),
-    #         'secret': os.getenv('GOOGLE_CLIENT_SECRET'),
-    #         'key': ''
-    #     }
-    # },
+    'google': {
+        'APP': {
+            'client_id': "747710179968-l5bnqm9lss00scf92pd9csbsvpvv8fs5.apps.googleusercontent.com",
+            'secret': "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",
+            'key': ''
+        }
+    },
     'github': {
         'APP': {
             'client_id': "Ov23liDNlII97CLP87o9",
