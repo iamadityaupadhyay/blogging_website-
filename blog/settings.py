@@ -65,19 +65,19 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
-
+from decouple import config
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'APP': {
-            'client_id': "747710179968-l5bnqm9lss00scf92pd9csbsvpvv8fs5.apps.googleusercontent.com",
-            'secret': "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",
+            'client_id': config('GOOGLE_CLIENT_ID'),
+            'secret': config('GOOGLE_SECRET'),
             'key': ''
         }
     },
     'github': {
         'APP': {
-            'client_id': "Ov23liDNlII97CLP87o9",
-            'secret':"705d2ca353c9b1fdca852247203608a4fc50cdb0",
+            'client_id': config('GITHUB_CLIENT_ID'),
+            'secret': config('GITHUB_SECRET'),
             'key': ''
         }
     }
