@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary',
     'cloudinary_storage',
-    "sslserver",
     'django.contrib.sites',  # Make sure 'django.contrib.sites' is added
     'allauth',
     'allauth.account',
