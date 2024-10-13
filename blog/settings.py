@@ -7,11 +7,9 @@ AUTH_USER_MODEL = 'myapp.UserImage'
 SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-<<<<<<< HEAD
+
 DEBUG =False
-=======
-DEBUG =False 
->>>>>>> 3d12b2a63cca11055344646e46f167c6b4208505
+
 import os
 
 # Use the PORT env var in development
@@ -191,7 +189,7 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-<<<<<<< HEAD
+
 JAZZMIN_SETTINGS = {
     "site_title": "My Admin",
     "site_header": "My Admin",
@@ -206,5 +204,3 @@ JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": True,
     "sidebar_nav_small_text": False,
 }
-=======
->>>>>>> 3d12b2a63cca11055344646e46f167c6b4208505
