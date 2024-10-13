@@ -43,7 +43,6 @@
                         <h3 class="card-title">{{u.first_name}}  {{u.last_name}}</h3>
                         <p class="card-text">{%if u.bio%} {{u.bio}} {%else%}Software Developer {%endif%}</p>
                         <p class="text-muted">Total Blogs: {{total_blog}}</p>
-                        <p class="card-text mb-3">Passionate about creating engaging web experiences and sharing knowledge through blogging.</p>
                         {% if request.user.username == u.username %}
                         <a href="/blog/profile-update/{{request.user.id}}" class="btn btn-dark">Update Profile</a>
                         {%endif%}

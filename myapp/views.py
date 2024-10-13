@@ -132,12 +132,11 @@ def get_category(request):
     
 
 def profile_update(request,pk):
-    
     try:
-         image= request.FILES['image']
-
+        image= request.FILES['image']
+    
     except:
-            image=None 
+        image=None 
     user = UserImage.objects.get(id=pk)
     if request.method=="POST":
         # fetching data
@@ -155,8 +154,7 @@ def profile_update(request,pk):
            user.last_name=last_name
         if username:
           user.username=username
-        if image:
-         user.image=image
+        user.image=image
         if bio:
           user.bio=bio
         # user.set_password(password)
