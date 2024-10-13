@@ -45,7 +45,7 @@
                         <p class="text-muted">Total Blogs: {{total_blog}}</p>
                         <p class="card-text mb-3">Passionate about creating engaging web experiences and sharing knowledge through blogging.</p>
                         {% if request.user.username == u.username %}
-                        <a href="/blog/profile-update/{{blog.id}}" class="btn btn-dark">Update Profile</a>
+                        <a href="/blog/profile-update/{{request.user}}" class="btn btn-dark">Update Profile</a>
                         {%endif%}
                     </div>
                 </div>
