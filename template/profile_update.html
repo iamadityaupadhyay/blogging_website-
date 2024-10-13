@@ -68,9 +68,16 @@
           {% endfor %}
         </div>
         {% endif %}
+        {%if user.image.url%}
+          <img src={{user.image.url}} height="40px" width="40px" style="border-radius: 50%;"/>
+        {%endif%}
         <div class="form-floating">
-          <input type="file" name="image" class="form-control" />
+          <input type="file" value={{user.image.url}} name="image" class="form-control" />
           <label for="floatingProfilePhoto">Profile Photo</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" value="{{ user.bio }}" name="bio" class="form-control" id="floatingFirstName" placeholder="Bio" required />
+          <label for="floatingFirstName">Bio</label>
         </div>
         <div class="form-floating">
           <input type="text" value="{{ user.first_name }}" name="first_name" class="form-control" id="floatingFirstName" placeholder="First Name" required />

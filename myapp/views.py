@@ -145,10 +145,20 @@ def profile_update(request,pk):
         first_name= data.get("first_name")
         last_name= data.get("last_name")
         username=data.get("username")
-        user.first_name=first_name
-        user.last_name=last_name
-        user.username=username
-        user.image=image
+        bio=data.get('bio')
+        email=data.get('email')
+        if email:
+            user.email=email
+        if first_name:
+          user.first_name=first_name
+        if last_name:
+           user.last_name=last_name
+        if username:
+          user.username=username
+        if image:
+         user.image=image
+        if bio:
+          user.bio=bio
         # user.set_password(password)
         user.save()
         return redirect("/blog/login")
@@ -277,3 +287,16 @@ def comment(request,pk):
         return JsonResponse(
             {"message":"New comment added"}
         )
+def profile(request, pk):
+    user = get_object_or_404(UserImage,id=pk)
+    try:
+        total_blogs=BlogPost.objects.filter(user=user)
+    except BlogPost.DoesNotExist:
+        print("some error occured")
+    
+    context ={
+        "u":user,
+        "total_blog": total_blogs.count(),
+        "list_of_blogs":total_blogs
+    }
+    return render(request, "profile_card.html",context)

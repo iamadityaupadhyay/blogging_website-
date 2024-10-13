@@ -178,12 +178,30 @@
 
     <div class="container">
         <div class="blog-post">
+            <a href="/blog/profile/{{blog.user.id}}">
+                <div style="display: flex; align-items: center; padding: 10px; max-width: 400px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    {%if blog.user.image.url%}
+                    <img src={{blog.user.image.url}} alt="Profile Picture" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 15px;">
+                    {%else%}
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy99WKiSBgBSvzJKqoLTCLwm6S7MQIytzeTg&s" alt="Profile Picture" style="width: 80px; height: 80px; border-radius: 50%; margin-right: 15px;">
+                    {%endif%}
+                </a>
+                    <div>
+                        
+                      <h2 style="margin: 0; font-size: 18px;">{{blog.user.first_name}} {{blog.user.last_name}}</h2>
+                      {%if blog.user.bio%}
+                      <p style="margin: 5px 0; font-size: 14px; color: #666;">{{blog.user.bio}}</p>
+                      {%else%}
+                      <p style="margin: 5px 0; font-size: 14px; color: #666;">Tech Enthusiasts</p>
+                      {%endif%}
+                      <p style="margin: 0; font-size: 12px; color: #999;">{{blog.user}}</p>
+                    </div>
+                  </div>
+           
+            
+              
             <h1 class="post-title">{{ blog.title }}</h1>
             <div class="post-meta">
-                <span>By {{ blog.user.first_name }}</span>
-                {%if blog.user.image.url%}
-                <span><img style="border-radius: 50%;"  loading="lazy" width="40px" height = "40px" alt="User" src={{blog.user.image.url}}></span>
-                {%endif%}
             </div>
             <div class="post-content">
                 {{ blog.content|safe }}
@@ -219,7 +237,7 @@
             {% for comment in comments %}
             <div class="card mb-3">
                 <div class="card-body">
-                    <h5 class="card-title">Written by ~ {{ comment.user }}</h5>
+                    <h5 class="card-title">{{ comment.user }}</h5>
                     <p class="card-text">{{ comment.comment }}</p>
                     <p class="card-text"><small class="text-muted">Posted {{ comment.created_at|timesince }} ago</small></p>
                 </div>
@@ -228,18 +246,7 @@
             <p>No comments yet. Be the first to comment!</p>
             {% endfor %}
         </div>
-        <h2 class="card-title mt-4">More from {{blog.user}}</h2>
-        <div class="more-from-grid">
-            {% for more_blog in morefrom %}
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">{{ more_blog.title }} </h5>
-                    <p id ="morefromtext" class="card-text">{{ more_blog.content|safe|truncatewords_html:20 }}</p>
-                    <a href="/blog/view-by-id/{{ more_blog.id }}" class="btn btn-dark" style="float:right;">View</a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
+       
 
         
 
@@ -300,10 +307,10 @@
                 }
             });
         </script>
-
+        {%if request.user.id == blog.user.id%}
         <a style="float:right;" href="/blog/update-blog/{{ blog.id }}" class="btn btn-dark mt-3">Update</a>
-
-        {% endif %}
+        {%endif%}
+       {%endif%}
     </div>
 
     <footer>

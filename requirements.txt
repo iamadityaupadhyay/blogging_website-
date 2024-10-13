@@ -17,3 +17,4 @@ PyJWT==2.8.0
 cryptography==42.0.8
 python-decouple==3.8
 sseclient-py==1.8.0
+MarkupSafe==2.1.5

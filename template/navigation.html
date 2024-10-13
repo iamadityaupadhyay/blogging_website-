@@ -36,13 +36,13 @@
             box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
         }
         .btn-outline-info {
-            color: #17a2b8;
-            border-color: #17a2b8;
+            color:#ffffff;
+            border-color:#396cb4;
         }
         .btn-outline-info:hover {
             color: #ffffff;
-            background-color: #17a2b8;
-            border-color: #17a2b8;
+            background-color: #4870a7;
+            border-color: #407cd0;
         }
         .profile-container {
             position: relative;
@@ -59,7 +59,7 @@
             right: 0;
             width: 200px;
             background-color: #1a1a1a;
-            border: 1px solid #17a2b8;
+            border: 1px solid #eeeeee;
             border-radius: 5px;
             padding: 10px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
@@ -132,12 +132,16 @@
                 </form>
                 {% if request.user.is_authenticated %}
                 <div class="profile-container">
+                    {%if request.user.image.url %}
                     <img alt="{{request.user.first_name}}" class="profile_image" src="{{request.user.image.url}}" width="50px" height="50px" style="border-radius:50%">
+                    {%else%}
+                    <img alt="{{request.user.first_name}}" class="profile_image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy99WKiSBgBSvzJKqoLTCLwm6S7MQIytzeTg&s" width="50px" height="50px" style="border-radius:50%">
+                    {%endif%}
                     <div class="profile-card" id="profileCard">
                         <h3>Hi {{request.user.first_name}}</h3>
                         <p>{{request.user.username}}</p>
                         <p>{{request.user.email}}</p>
-                        <a href="/blog/profile-update/{{request.user.id}}" class="btn btn-outline-info me-2" id="updateButton">Update Profile</a>
+                        <a href="/blog/profile/{{request.user.id}}" class="btn btn-outline-info me-2" id="updateButton">Profile</a>
                         <a href="/blog/logout/" class="btn btn-outline-info me-2" type="submit">Logout</a>
                     </div>
                 </div>

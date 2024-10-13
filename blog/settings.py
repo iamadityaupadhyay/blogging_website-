@@ -7,7 +7,7 @@ AUTH_USER_MODEL = 'myapp.UserImage'
 SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =True 
+DEBUG =False
 import os
 
 # Use the PORT env var in development
@@ -30,7 +30,7 @@ CKEDITOR_CONFIGS = {
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_BASEPATH = "/my_static/ckeditor/ckeditor/"
 INSTALLED_APPS = [
-    # 'jazzmin',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    # 'sslserver'
 
 ]
 import os
@@ -186,3 +187,17 @@ CLOUDINARY_STORAGE = {
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+JAZZMIN_SETTINGS = {
+    "site_title": "My Admin",
+    "site_header": "My Admin",
+    "welcome_sign": "Welcome to My Admin Panel",
+    "topmenu_links": [
+        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
+    ],
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "cosmo",  # You can choose any valid bootstrap theme
+    "navbar_small_text": True,
+    "sidebar_nav_small_text": False,
+}

@@ -29,7 +29,9 @@ urlpatterns = [
    path('blog_by_category/<int:pk>',view_blog_category),
    path('comment/<int:pk>',comment),
    path('like/<int:pk>',like),
+   path('profile/<int:pk>',profile),
    path('accounts/', include('allauth.urls')),
+   
    
 ]
 

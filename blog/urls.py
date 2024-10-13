@@ -23,6 +23,7 @@ from myapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('blog/',include('myapp.urls')),
+    path('accounts/', include('allauth.urls')),
     path('', views.home_view, name='home'),
     
     
