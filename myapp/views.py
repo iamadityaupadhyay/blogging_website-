@@ -133,7 +133,7 @@ def get_category(request):
 
 def profile_update(request,pk):
     try:
-        image= request.FILES['image']
+        image = request.FILES['image']
     
     except:
         image=None 
@@ -154,10 +154,12 @@ def profile_update(request,pk):
            user.last_name=last_name
         if username:
           user.username=username
-        user.image=image
+        if image is not None:
+                 user.image=image
+        print(image)
         if bio:
           user.bio=bio
-        # user.set_password(password)
+
         user.save()
         return redirect("/blog/login")
     context={
