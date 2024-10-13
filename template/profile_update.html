@@ -58,7 +58,6 @@
     
     <main class="register-container w-100">
       <h1 class="register-title">Update Profile</h1>
-      {{ user }}
       <form method="post" enctype="multipart/form-data">
         {% csrf_token %} 
         {% if messages %}
@@ -68,9 +67,11 @@
           {% endfor %}
         </div>
         {% endif %}
+        <center>
         {%if user.image.url%}
-          <img src={{user.image.url}} height="40px" width="40px" style="border-radius: 50%;"/>
+          <img src={{user.image.url}} height="60px" width="60px" style="border-radius: 50%;"/>
         {%endif%}
+      </center>
         <div class="form-floating">
           <input type="file" value={{user.image.url}} name="image" class="form-control" />
           <label for="floatingProfilePhoto">Profile Photo</label>
