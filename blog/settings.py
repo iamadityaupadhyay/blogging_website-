@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG =False 
+DEBUG =True
 
 import os
 
@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
-    # 'sslserver'
+    'sslserver'
 
 ]
 import os
@@ -190,17 +190,4 @@ CLOUDINARY_STORAGE = {
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-JAZZMIN_SETTINGS = {
-    "site_title": "My Admin",
-    "site_header": "My Admin",
-    "welcome_sign": "Welcome to My Admin Panel",
-    "topmenu_links": [
-        {"name": "Home", "url": "admin:index", "permissions": ["auth.view_user"]},
-    ],
-}
 
-JAZZMIN_UI_TWEAKS = {
-    "theme": "cosmo",  # You can choose any valid bootstrap theme
-    "navbar_small_text": True,
-    "sidebar_nav_small_text": False,
-}

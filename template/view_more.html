@@ -212,7 +212,7 @@
             </div>
             {% endif %}
             {% if request.user.is_authenticated %}
-            <button class="like-btn" data-post-id="{{ blog.id }}" data-like="{{like.like|yesno:'false,true' }}">
+            <button class="like-btn" data-post-id="{{ blog.slug }}" data-like="{{like.like|yesno:'false,true' }}">
                 {% if like.like %}
                     <i class="fas fa-thumbs-down"></i>{{likeCount}}
                 {% else %}
@@ -228,7 +228,7 @@
 
         <div class="comment-section">
             <textarea id="comment-box" class="form-control" rows="3" placeholder="Write a comment..."></textarea>
-            <button class="comment-btn" data-post-id="{{ blog.id }}">
+            <button class="comment-btn" data-post-id="{{ blog.slug }}">
                 <i class="fas fa-comment"></i> Comment
             </button>
         </div>
@@ -308,7 +308,7 @@
             });
         </script>
         {%if request.user.id == blog.user.id%}
-        <a style="float:right;" href="/blog/update-blog/{{ blog.id }}" class="btn btn-dark mt-3">Update</a>
+        <a style="float:right;" href="/blog/update-blog/{{ blog.slug }}" class="btn btn-dark mt-3">Update</a>
         {%endif%}
        {%endif%}
     </div>

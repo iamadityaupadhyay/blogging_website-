@@ -59,8 +59,8 @@ def navigation(request):
         "categorys":blogCategory
     }
     return render(request,"navigation.html",context)
-def view_blog_category(request,pk):
-    category= Category.objects.get(id=pk)
+def view_blog_category(request,slug):
+    category=get_object_or_404(Category, slug=slug)
     blog= BlogPost.objects.filter(category=category)
     context={
         "blogs":blog
@@ -133,7 +133,7 @@ def get_category(request):
 
 def profile_update(request,pk):
     try:
-        image = request.FILES['image']
+        image= request.FILES['image']
     
     except:
         image=None 
@@ -155,11 +155,11 @@ def profile_update(request,pk):
         if username:
           user.username=username
         if image is not None:
-                 user.image=image
+         user.image=image
         print(image)
         if bio:
           user.bio=bio
-
+        # user.set_password(password)
         user.save()
         return redirect("/blog/login")
     context={
@@ -168,8 +168,8 @@ def profile_update(request,pk):
     return render(request,"profile_update.html",context)   
 
 @login_required(login_url="/blog/login")
-def update_blog(request,pk):
-    blog = BlogPost.objects.get(id=pk)
+def update_blog(request,slug):
+    blog = get_object_or_404(BlogPost,slug=slug)
     if request.user!=blog.user:
         return redirect("/blog/home/")
     if request.method =="POST":
@@ -207,12 +207,10 @@ def update_blog(request,pk):
     return render(request,"update_blog.html",context)
 # delete blog 
 @login_required(login_url="/blog/login")
-def delete_blog(request,pk):
-    blog = BlogPost.objects.filter(id =pk)
+def delete_blog(request,slug):
+    blog = get_object_or_404(BlogPost, slug=slug)
     blog.delete()
     return redirect("/blog/home/")
-
-
 
 @csrf_exempt
 def upload_image(request):
@@ -232,8 +230,8 @@ def get_user(request):
         serializer.data
     )
 
-def view_by_id(request,pk):
-    queryset = BlogPost.objects.get(id=pk)
+def view_by_id(request,slug):
+    queryset = get_object_or_404(BlogPost,slug = slug)
     comments = queryset.blog_comment.all()
     morefromuserblog=BlogPost.objects.filter(user=queryset.user)
     likecount=queryset.blog_like.all().count()
@@ -251,8 +249,8 @@ def view_by_id(request,pk):
             print("Not found")
             
     return render(request,"view_more.html",context)
-def like(request,pk):
-    blog=get_object_or_404(BlogPost,id=pk)
+def like(request,slug):
+    blog=get_object_or_404(BlogPost,slug=slug)
     if request.method=="POST":
         data = request.POST
         print(data)
