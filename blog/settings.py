@@ -124,7 +124,7 @@ import dj_database_url
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://root:6PCfNuw8TfFyFOMlYyyiylHCmKk4CfJ3@dpg-cs4cn2t2ng1s739i0s80-a.singapore-postgres.render.com/blogging_jumc',
+        default='postgresql://postgres:rEJlnftnDeQfUMtPRXjXneQaGrYVkmlS@autorack.proxy.rlwy.net:24533/railway',
         conn_max_age=600, 
     )
 }
