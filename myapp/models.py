@@ -11,7 +11,7 @@ class Category(models.Model):
         return self.categoryName
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug=slugify(self.title)
+            self.slug=slugify(self.categoryName)
         return super(Category,self).save(*args, **kwargs)
 class UserImage(AbstractUser):
     image = CloudinaryField('image', blank=True, null=True)
@@ -21,7 +21,7 @@ class UserImage(AbstractUser):
         return self.title
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug=slugify(self.title)
+            self.slug=slugify(self.username)
         return super(UserImage,self).save(*args, **kwargs)
     def __str__(self):
         return self.username

@@ -8,7 +8,7 @@ SECRET_KEY = 'django-insecure-qk(98ujy)7fv(w#iz7a2+_75dde9wk8^x2!4@^wn01o#lt_56d
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG =False
+DEBUG = True
 
 import os
 
@@ -125,7 +125,7 @@ import dj_database_url
 DATABASES = {
     'default': dj_database_url.config(
         default='postgresql://postgres:rEJlnftnDeQfUMtPRXjXneQaGrYVkmlS@autorack.proxy.rlwy.net:24533/railway',
-        conn_max_age=600, 
+        conn_max_age=12000, 
     )
 }
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
