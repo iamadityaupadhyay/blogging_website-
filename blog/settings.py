@@ -125,7 +125,7 @@ import dj_database_url
 DATABASES = {
     'default': dj_database_url.config(
         default='postgresql://postgres:rEJlnftnDeQfUMtPRXjXneQaGrYVkmlS@autorack.proxy.rlwy.net:24533/railway',
-        conn_max_age=12000, 
+        conn_max_age=600, 
     )
 }
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'

@@ -18,31 +18,31 @@ from django.core.files.storage import default_storage
 @login_required(login_url="/blog/login")
 def create_blog(request):
     if request.method == 'POST':
-        data=request.POST
-        category=data.get('category')
-        content = data.get('content')
-        
-        
-        title=data.get('title')
+        try:
+            data=request.POST
+            category=data.get('category')
+            content = data.get('content')
+            title=data.get('title')
 
-        try:
-          image=request.FILES['image']
-        except:
-          image=None
-        try:
-            category_object= Category.objects.get(id=category)
- 
-        except Category.DoesNotExist:
-            return render(request,'create_blog_post.html',{"error":"Select a category"})
-        
-        blog_post = BlogPost.objects.create(
-            title=title, 
-            content=content,
-            category=category_object,
-            user=request.user,
-            image=image
-        )
-        return redirect('/blog/home/')
+            try:
+                image=request.FILES['image']
+            except:
+                image=None
+            try:
+                category_object= Category.objects.get(id=category)
+            except Category.DoesNotExist:
+                return render(request,'create_blog_post.html',{"error":"Select a category"})
+            
+            blog_post = BlogPost.objects.create(
+                title=title, 
+                content=content,
+                category=category_object,
+                user=request.user,
+                image=image
+            )
+            return redirect('/blog/home/')
+        except Exception as e :
+            print(e)
     return render(request, 'create_blog_post.html')
 
 @login_required(login_url="/blog/login")
