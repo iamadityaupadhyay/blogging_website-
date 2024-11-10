@@ -31,6 +31,7 @@ def create_blog(request):
             try:
                 category_object= Category.objects.get(id=category)
             except Category.DoesNotExist:
+                print("Category not found")
                 return render(request,'create_blog_post.html',{"error":"Select a category"})
             
             blog_post = BlogPost.objects.create(

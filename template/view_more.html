@@ -266,7 +266,7 @@
                 success: function(data) {
                     console.log(data)
                     if (data.liked) {
-                        alert("Blog Liked")
+                        
                         button.html('<i class="fas fa-thumbs-up"></i> ' + data.likeCount);
                         button.css({
                             'background-color': 'black',
@@ -274,7 +274,7 @@
                         });
                         button.data('like','false')
                     } else {
-                        alert("Blog UnLiked")
+
                         button.html('<i class="fas fa-thumbs-up"></i>' + data.likeCount);
                         button.css({
                             'background-color': 'white',
@@ -315,7 +315,6 @@
 
     <footer>
         <p>Built with ❤️ by Aditya Upadhyay</p>
-        <p>DSA ❤️ Development</p>
         <div>
             <a class="btn btn-light" href="https://www.linkedin.com/in/iamadityaupadhyay/">LinkedIn</a>
             <a class="btn btn-light" href="https://github.com/iamadityaupadhyay">GitHub</a>
