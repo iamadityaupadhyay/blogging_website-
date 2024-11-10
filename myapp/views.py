@@ -48,11 +48,14 @@ def create_blog(request):
 
 @login_required(login_url="/blog/login")
 def view_blog(request,user):
-    blog= BlogPost.objects.filter(user=user)
-    context={
-       "blogs":blog
-    }
-    return render(request,"view_blog.html",context)
+    if request.user.is_authenticated:
+        blog= BlogPost.objects.filter(user=user)
+        context={
+        "blogs":blog
+        }
+        return render(request,"view_blog.html",context)
+    else:
+        return redirect("/blog/login/")
 
 def navigation(request):
     blogCategory = Category.objects.all()
